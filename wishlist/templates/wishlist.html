@@ -1,26 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h5>Nama: </h5>
-<b>{{nama}}</b>
 
-<table>
-    <tr>
-    <th>Nama Barang</th>
-    <th>Harga Barang</th>
-    <th>Deskripsi</th>
-    </tr>
-    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-    {% for barang in list_barang %}
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Wishlist</a>
+      </div>
+      <p class="navbar-text">{{nama}}</p>
+      <ul class="nav navbar-right">
+        <li><a href="{% url 'wishlist:logout' %}">Logout</a></li>
+      </ul>
+    </div>
+</nav>
+
+<table class="table table-dark">
+    <thead class="thead-dark">
         <tr>
-            <th>{{barang.nama_barang}}</th>
-            <th>{{barang.harga_barang}}</th>
-            <th>{{barang.deskripsi}}</th>
+            <th>Nama Barang</th>
+            <th>Harga Barang</th>
+            <th>Deskripsi</th>
         </tr>
-    {% endfor %}
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-    <button><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+    </thead>
+    <tbody>
+        {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+        {% for barang in list_barang %}
+            <tr>
+                <th>{{barang.nama_barang}}</th>
+                <th>{{barang.harga_barang}}</th>
+                <th>{{barang.deskripsi}}</th>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
+
+<h5 class="align-text-bottom">Sesi terakhir login: {{ last_login }}</h5>
+
 
 
 {% endblock content %}
