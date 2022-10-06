@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    
+    $(document).ready(function () {
+        $.getJSON("{% url 'wishlist:show_json' %}", function (json) {
+            // JSON result in `data` variable
+            var allWish = [];
+            $.each(json, function (index, val) {
+                var oneWish = [];
+                var fields = val.fields
+                oneWish.push("<td>" + String(val.fields.nama_barang) + "</td>");
+                oneWish.push("<td>" + val.fields.harga_barang + "</td>");
+                oneWish.push("<td>" + val.fields.deskripsi + "</td>");
+                allWish.push("<tr>" + oneWish.join("") + "</tr>");
+            });
+            document.getElementById("list_barang").innerHTML = allWish.join("");
+        });
+    });
+    
+    </script>
+</head>
+
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand">Wishlist</a>
+      </div>
+      <ul class="nav navbar-right">
+        <li><a href="{% url 'wishlist:logout' %}">Logout</a></li>
+      </ul>
+    </div>
+</nav>
+
+    <table class="table table-bordered table-bordered">
+        <thead>
+            <tr>
+                <th>Nama Barang</th>
+                <th>Harga Barang</th>
+                <th>Deskripsi</th>
+            </tr>
+        </thead>
+        <tbody id="list_barang">
+        </tbody>
+    </table>
+
+
+    <span class="align-text-bottom">Sesi terakhir login: {{ last_login }}</span>
+
+        {% comment %}
+    <form action="{% url 'wishlist:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form> {% endcomment %}
+
+
+
+
+{% endblock content %}
